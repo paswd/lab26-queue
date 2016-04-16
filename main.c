@@ -1,15 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include "queue.h"
-
-void PrintQueue(Queue* queue)
-{
-	QueueNode* ths = queue->first;
-	while (ths != NULL) {
-		printf("%lld ", ths->value);
-		ths = ths->next;
-	}
-	printf("\n");
-}
 
 int main(void)
 {
@@ -17,8 +9,13 @@ int main(void)
 	queue_push(queue, 1);
 	queue_push(queue, 2);
 	queue_push(queue, 3);
-	PrintQueue(queue);
+	queue_push(queue, 4);
+	queue_push(queue, 5);
+	queue_print(queue);
 	queue_pop(queue);
-	PrintQueue(queue);
+	queue_print(queue);
+	queue_pop(queue);
+	queue_print(queue);
+	queue_destroy(queue);
 	return 0;
 }

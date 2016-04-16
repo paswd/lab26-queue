@@ -25,7 +25,7 @@ Queue* queue_create(void)
 void queue_destroy(Queue* queue)
 {
 	QueueNode* node_del = queue->first;
-	while (node_del != NULL) {
+	while (node_del) {
 		QueueNode* tmp = node_del->next;
 		free(node_del);
 		node_del = tmp;
@@ -35,17 +35,15 @@ void queue_destroy(Queue* queue)
 void queue_push(Queue* queue, Item value)
 {
 	QueueNode* nw = (QueueNode *) calloc(1, sizeof(QueueNode));
-	if (nw == NULL){
+	if (!nw) {
 		queue->error = 1;
 		return;
 	}
 	nw->value = value;
 	nw->next = NULL;
 	if (queue->last) queue->last->next = nw;
-	else {
-		queue->first = nw;
-		queue->last = nw;
-	}
+	else queue->first = nw;
+	queue->last = nw;
 }
 Item queue_pop(Queue* queue)
 {
@@ -58,4 +56,13 @@ Item queue_pop(Queue* queue)
 Item queue_first(Queue* queue)
 {
 	return queue->first->value;
+}
+void queue_print(Queue* queue)
+{
+	QueueNode* ths = queue->first;
+	while (ths) {
+		printf("%lld ", ths->value);
+		ths = ths->next;
+	}
+	printf("\n");
 }
