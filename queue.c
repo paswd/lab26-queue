@@ -5,36 +5,41 @@
 
 struct _queue_node {
 	Item value;
-	QueueNode* next;
+	QueueNode *next;
 };
 
+#define QUEUE_NO_ERRORS              0 
+#define QUEUE_STACK_OVERFLOW  (1u << 0)
+#define QUEUE_STACK_UNDERFLOW (1u << 1)
+
 struct _queue {
-	QueueNode* first;
-	QueueNode* last;
+	QueueNode *first;
+	QueueNode *last;
 	int error;
 };
 
-Queue* queue_create(void)
+Queue *queue_create(void)
 {
-	Queue* nw = (Queue *) calloc(1, sizeof(Queue));
+	Queue *nw = (Queue *) calloc(1, sizeof(Queue));
 	nw->first = NULL;
 	nw->last = NULL;
-	nw->error = 0;
+	nw->error = ;
 	return nw;
 }
-void queue_destroy(Queue* queue)
+void queue_destroy(Queue **queue)
 {
-	QueueNode* node_del = queue->first;
+	QueueNode *node_del = (*queue)->first;
 	while (node_del) {
-		QueueNode* tmp = node_del->next;
+		QueueNode *tmp = node_del->next;
 		free(node_del);
 		node_del = tmp;
 	}
-	free(queue);
+	free(*queue);
+	*queue = NULL;
 }
-void queue_push(Queue* queue, Item value)
+void queue_push(Queue *queue, Item value)
 {
-	QueueNode* nw = (QueueNode *) calloc(1, sizeof(QueueNode));
+	QueueNode *nw = (QueueNode *) calloc(1, sizeof(QueueNode));
 	if (!nw) {
 		queue->error = 1;
 		return;
@@ -45,21 +50,21 @@ void queue_push(Queue* queue, Item value)
 	else queue->first = nw;
 	queue->last = nw;
 }
-Item queue_pop(Queue* queue)
+Item queue_pop(Queue *queue)
 {
 	Item result = queue->first->value;
-	QueueNode* node_del = queue->first;
+	QueueNode *node_del = queue->first;
 	queue->first = node_del->next;
 	free(node_del);
 	return result;
 }
-Item queue_first(Queue* queue)
+Item queue_first(Queue *queue)
 {
 	return queue->first->value;
 }
-void queue_print(Queue* queue)
+void queue_print(Queue *queue)
 {
-	QueueNode* ths = queue->first;
+	QueueNode *ths = queue->first;
 	while (ths) {
 		printf("%lld ", ths->value);
 		ths = ths->next;

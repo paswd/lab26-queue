@@ -16,6 +16,6 @@ int main(void)
 	queue_print(queue);
 	queue_pop(queue);
 	queue_print(queue);
-	queue_destroy(queue);
+	queue_destroy(&queue);
 	return 0;
 }
