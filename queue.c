@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include "queue.h"
 
 struct _queue_node {
@@ -70,4 +71,10 @@ void queue_print(Queue *queue)
 		ths = ths->next;
 	}
 	printf("\n");
+}
+
+bool queue_is_empty(Queue *queue)
+{
+	if (!queue->first) return true;
+	return false;
 }
