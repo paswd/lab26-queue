@@ -1,9 +1,9 @@
-FLAGS=-Wextra -Wall -Werror -pedantic -std=c99 -lm
+FLAGS=-Wextra -Wall -Werror -pedantic -std=c99
 
 all: start
 
 start: main.o queue.o
-	gcc $(FLAGS) -o lab26 -lm main.o queue.o
+	gcc $(FLAGS) -o lab26 main.o queue.o
 
 main.o: main.c
 	gcc -c $(FLAGS) main.c
