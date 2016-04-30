@@ -4,14 +4,14 @@
 #include <stdbool.h>
 #include "queue.h"
 
+#define QUEUE_NO_ERRORS              0 
+#define QUEUE_STACK_OVERFLOW  (1u << 0)
+#define QUEUE_STACK_UNDERFLOW (1u << 1)
+
 struct _queue_node {
 	Item value;
 	QueueNode *next;
 };
-
-#define QUEUE_NO_ERRORS              0 
-#define QUEUE_STACK_OVERFLOW  (1u << 0)
-#define QUEUE_STACK_UNDERFLOW (1u << 1)
 
 struct _queue {
 	QueueNode *first;
@@ -24,7 +24,7 @@ Queue *queue_create(void)
 	Queue *nw = (Queue *) calloc(1, sizeof(Queue));
 	nw->first = NULL;
 	nw->last = NULL;
-	nw->error = ;
+	nw->error = 0;
 	return nw;
 }
 void queue_destroy(Queue **queue)
@@ -47,7 +47,7 @@ void queue_push(Queue *queue, Item value)
 	}
 	nw->value = value;
 	nw->next = NULL;
-	if (queue->last) queue->last->next = nw;
+	if (queue->last != NULL) queue->last->next = nw;
 	else queue->first = nw;
 	queue->last = nw;
 }
@@ -56,6 +56,7 @@ Item queue_pop(Queue *queue)
 	Item result = queue->first->value;
 	QueueNode *node_del = queue->first;
 	queue->first = node_del->next;
+	if (queue->first == NULL) queue->last = NULL;
 	free(node_del);
 	return result;
 }
