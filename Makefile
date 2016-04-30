@@ -12,4 +12,4 @@ queue.o: queue.h queue.c
 	gcc -c $(FLAGS) queue.h queue.c
 
 clean:
-	-rm *.o *.gch lab26
+	-rm -f *.o *.gch lab26
