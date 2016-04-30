@@ -13,7 +13,7 @@ void queue_destroy(Queue **queue);
 void queue_push(Queue *queue, Item value);
 Item queue_pop(Queue *queue);
 Item queue_first(Queue *queue);
-void queue_print(Queue *queue);
+//void queue_print(Queue *queue);
 bool queue_is_empty(Queue *queue);
 
 

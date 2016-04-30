@@ -69,7 +69,7 @@ Item queue_first(Queue *queue)
 	return queue->first->value;
 }
 
-void queue_print(Queue *queue)
+/*void queue_print(Queue *queue)
 {
 	QueueNode *ths = queue->first;
 	while (ths) {
@@ -77,7 +77,7 @@ void queue_print(Queue *queue)
 		ths = ths->next;
 	}
 	printf("\n");
-}
+}*/
 
 bool queue_is_empty(Queue *queue)
 {
