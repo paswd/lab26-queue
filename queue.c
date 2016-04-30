@@ -27,6 +27,7 @@ Queue *queue_create(void)
 	nw->error = 0;
 	return nw;
 }
+
 void queue_destroy(Queue **queue)
 {
 	QueueNode *node_del = (*queue)->first;
@@ -38,6 +39,7 @@ void queue_destroy(Queue **queue)
 	free(*queue);
 	*queue = NULL;
 }
+
 void queue_push(Queue *queue, Item value)
 {
 	QueueNode *nw = (QueueNode *) calloc(1, sizeof(QueueNode));
@@ -51,6 +53,7 @@ void queue_push(Queue *queue, Item value)
 	else queue->first = nw;
 	queue->last = nw;
 }
+
 Item queue_pop(Queue *queue)
 {
 	Item result = queue->first->value;
@@ -60,10 +63,12 @@ Item queue_pop(Queue *queue)
 	free(node_del);
 	return result;
 }
+
 Item queue_first(Queue *queue)
 {
 	return queue->first->value;
 }
+
 void queue_print(Queue *queue)
 {
 	QueueNode *ths = queue->first;
