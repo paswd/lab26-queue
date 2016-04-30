@@ -13,3 +13,7 @@ queue.o: queue.h queue.c
 
 clean:
 	-rm -f *.o *.gch lab26
+
+lib: queue.o
+	ar rc lib/libqueue.a queue.o
+	ranlib lib/libqueue.a

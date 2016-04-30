@@ -8,7 +8,7 @@ void queue_sort(Queue *queue_basic)
 {
 	Queue *queue = queue_create();
 	Queue *queue_sub = queue_create();
-	while (!queue_is_empty(queue_basic)) {		
+	while (!queue_is_empty(queue_basic)) {	
 		Item tmp = queue_pop(queue_basic);
 		bool is_inserted = false;
 		while (!queue_is_empty(queue)) {
@@ -35,6 +35,7 @@ void queue_sort(Queue *queue_basic)
 
 void queue_print(Queue *queue)
 {
+	printf("Input\n");
 	Queue *tmp = queue_create();
 	while (!queue_is_empty(queue)) {
 		Item value = queue_pop(queue);
@@ -50,7 +51,7 @@ void queue_print(Queue *queue)
 
 int main(void)
 {
-	Queue *queue = queue_create();
+	/*Queue *queue = queue_create();
 	int n;
 	scanf("%d", &n);
 	for (int i = 0; i < n; i++) {
@@ -60,6 +61,48 @@ int main(void)
 	}
 	queue_sort(queue);
 	queue_print(queue);
-	queue_destroy(&queue);
+	queue_destroy(&queue);*/
+	Queue *queue = queue_create();
+	printf("-------------------------------------------\n");
+	printf("Commands:\n");
+	printf("a <value> - push to queue\n");
+	printf("d - pop from queue and print popped item\n");
+	printf("s - sort queue\n");
+	printf("p - print queue\n");
+	printf("q - exit\n");
+	printf("-------------------------------------------\n");
+	while (true) {
+		char cmd;
+		Item value = 0;
+		bool is_finished = false;
+		scanf("%c", &cmd);
+		switch (cmd) {
+			case 'q':
+				is_finished = true;
+				break;
+			case 'a':
+				scanf("%lld", &value);
+				queue_push(queue, value);
+				break;
+			case 'd':
+				printf("%lld\n", queue_pop(queue));
+				break;
+			case 's':
+				queue_sort(queue);
+				//queue_print(queue);
+				break;
+			case 'p':
+				queue_print(queue);
+				break;
+			case '\n':
+				break;
+			default:
+				printf("Invalid command `%c`\n", cmd);
+				break;
+		}
+		if (is_finished) break;
+	}
+	printf("Goodbye!\n");
+
 	return 0;
 }

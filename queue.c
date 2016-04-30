@@ -56,11 +56,16 @@ void queue_push(Queue *queue, Item value)
 
 Item queue_pop(Queue *queue)
 {
+	if (queue->first == NULL) {
+		printf("Queue is empty\n");
+		queue->last = NULL;
+		return 0;
+	}
 	Item result = queue->first->value;
 	QueueNode *node_del = queue->first;
 	queue->first = node_del->next;
-	if (queue->first == NULL) queue->last = NULL;
 	free(node_del);
+	node_del = NULL;
 	return result;
 }
 
@@ -81,6 +86,6 @@ Item queue_first(Queue *queue)
 
 bool queue_is_empty(Queue *queue)
 {
-	if (!queue->first) return true;
+	if (queue->first == NULL) return true;
 	return false;
 }
