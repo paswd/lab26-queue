@@ -4,11 +4,14 @@
 #include <stdbool.h>
 #include "queue.h"
 
+#define QUEUE_EMPTY 	-9000000000000000000
+
 void queue_sort(Queue *queue_basic)
 {
 	Queue *queue = queue_create();
 	Queue *queue_sub = queue_create();
-	while (!queue_is_empty(queue_basic)) {	
+	while (!queue_is_empty(queue_basic)) {
+
 		Item tmp = queue_pop(queue_basic);
 		bool is_inserted = false;
 		while (!queue_is_empty(queue)) {
@@ -26,6 +29,7 @@ void queue_sort(Queue *queue_basic)
 	}
 
 	while (!queue_is_empty(queue)) {
+		//printf("Sorting\n");
 		queue_push(queue_basic, queue_pop(queue));
 	}
 
@@ -35,7 +39,7 @@ void queue_sort(Queue *queue_basic)
 
 void queue_print(Queue *queue)
 {
-	printf("Input\n");
+	//printf("Input\n");
 	Queue *tmp = queue_create();
 	while (!queue_is_empty(queue)) {
 		Item value = queue_pop(queue);
@@ -43,7 +47,15 @@ void queue_print(Queue *queue)
 		queue_push(tmp, value);
 	}
 	printf("\n");
+	//queue_pop(queue);
+	//queue_print_correct(tmp);
+	//printf("%lld\n", queue_pop(tmp));
+	//queue_print_correct(tmp);
+	//return;
 	while (!queue_is_empty(tmp)) {
+		//queue_print_correct(queue);
+		//queue_print_correct(tmp);
+		//printf("---\n");
 		queue_push(queue, queue_pop(tmp));
 	}
 	queue_destroy(&tmp);
@@ -71,11 +83,15 @@ int main(void)
 	printf("p - print queue\n");
 	printf("q - exit\n");
 	printf("-------------------------------------------\n");
+	//int cnt = 0;
 	while (true) {
+		//printf("%d\n", cnt);
+		//cnt++;
 		char cmd;
 		Item value = 0;
 		bool is_finished = false;
 		scanf("%c", &cmd);
+		long long tmp;
 		switch (cmd) {
 			case 'q':
 				is_finished = true;
@@ -85,7 +101,8 @@ int main(void)
 				queue_push(queue, value);
 				break;
 			case 'd':
-				printf("%lld\n", queue_pop(queue));
+				tmp = (long long) queue_pop(queue);
+				if (tmp != QUEUE_EMPTY) printf("%lld\n", tmp);
 				break;
 			case 's':
 				queue_sort(queue);
@@ -94,6 +111,12 @@ int main(void)
 			case 'p':
 				queue_print(queue);
 				break;
+			/*case 'c':
+				queue_print_correct(queue);
+				break;
+			case 'f':
+				printf("%lld\n", queue_first(queue));
+				break;*/
 			case '\n':
 				break;
 			default:

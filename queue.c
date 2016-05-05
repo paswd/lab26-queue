@@ -7,6 +7,7 @@
 #define QUEUE_NO_ERRORS              0 
 #define QUEUE_STACK_OVERFLOW  (1u << 0)
 #define QUEUE_STACK_UNDERFLOW (1u << 1)
+#define QUEUE_EMPTY 	-9000000000000000000
 
 struct _queue_node {
 	Item value;
@@ -47,6 +48,7 @@ void queue_push(Queue *queue, Item value)
 		queue->error = 1;
 		return;
 	}
+	//printf("PUSH: TRUE\n");
 	nw->value = value;
 	nw->next = NULL;
 	if (queue->last != NULL) queue->last->next = nw;
@@ -59,7 +61,7 @@ Item queue_pop(Queue *queue)
 	if (queue->first == NULL) {
 		printf("Queue is empty\n");
 		queue->last = NULL;
-		return 0;
+		return QUEUE_EMPTY;
 	}
 	Item result = queue->first->value;
 	QueueNode *node_del = queue->first;
@@ -74,7 +76,7 @@ Item queue_first(Queue *queue)
 	return queue->first->value;
 }
 
-/*void queue_print(Queue *queue)
+/*void queue_print_correct(Queue *queue)
 {
 	QueueNode *ths = queue->first;
 	while (ths) {
@@ -86,6 +88,11 @@ Item queue_first(Queue *queue)
 
 bool queue_is_empty(Queue *queue)
 {
-	if (queue->first == NULL) return true;
+	if (queue->first == NULL) {
+		queue->last = NULL;
+		//printf("Empty: TRUE\n");
+		return true;
+	}
+	//printf("Empty: FALSE\n");
 	return false;
 }
