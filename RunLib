@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -f lab26 ]
+	then
+	rm lab26
+fi
+make lib
+gcc main.c -L. lib/libqueue.a -o lab26
+./lab26
